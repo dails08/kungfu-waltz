@@ -50,11 +50,14 @@ function renderCharts(mmgData){
 
 	
 	arcChart
+	.append("g")
+	.attr("id", "baseline")
+	.attr("transform", "translate(700,300)")
 	.append("line")
-	.attr("x1", 100)
-	.attr("y1", 300)
-	.attr("x2", 700)
-	.attr("y2", 300)
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", -lineLength)
+	.attr("y2", 0)
 	.style("stroke", "black")
 	.style("stroke-width", "1px");
 	
@@ -90,10 +93,12 @@ function renderCharts(mmgData){
 	.transition(function(d, i){return "transition" + i})
 	.duration(1000)
 	.delay(function(d, i){return i * 100})
+	.each("end", function(d,i){
+		return placeTick(d,i);
+	})
 	.attrTween("d", function(d,i,a){
 		return function (t){
 			tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
-			//tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(-Math.PI/2)
 			.outerRadius(function(d){
 				if (verbose){
 					console.log(d.reldate);
@@ -119,16 +124,32 @@ function renderCharts(mmgData){
 			return thisArc;
 		}
 	})
-	
-	/* .attr("d", function(d){
-		thisArc = arcGen(d);
-		if (verbose){
-			console.log(thisArc);
-		}
-		return thisArc;
-	}) */
+	.style("fill", "none")
 	.style("stroke", "red")
 	.style("stroke-width", ".5");
+	
+	function placeTick(d, i){
+		console.log("calling placetick");
+		console.log("placeTick function using " +d.reldate);
+		console.log(i);
+		
+		d3.select("g#baseline")
+		.append("g")
+		.attr("class", "dateG")
+		.attr("transform", function(m){
+			console.log("transform function using " + d.reldate);
+			return "translate(-" + 2*arcXScale(d.reldate) + ", 0)";
+		})
+		.append("line")
+		.attr("x1", 0)
+		.attr("x2", 0)
+		.attr("y1", 0)
+		.attr("y2", 10)
+		.style("stroke", "black")
+		.style("stroke-width", "1px");
+		
+		
+	}
 	
 	
 	
