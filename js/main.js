@@ -87,8 +87,9 @@ function renderCharts(mmgData){
 		return "translate(" + (700-arcXScale(d.reldate)) + ",300)";
 	})
 	.append("path")
-	.transition()
+	.transition(function(d, i){return "transition" + i})
 	.duration(1000)
+	.delay(function(d, i){return i * 100})
 	.attrTween("d", function(d,i,a){
 		return function (t){
 			tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
