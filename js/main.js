@@ -45,6 +45,7 @@ function renderCharts(mmgData){
 	
 	lineLength = 600;
 	
+	//the arcs must be drawn with the center on the line halfway between 1879 and the reldate
 	arcXScale = d3.scale.linear().domain([1, 3879]).range([2, lineLength/2]);
 
 	
@@ -55,7 +56,7 @@ function renderCharts(mmgData){
 	.attr("x2", 700)
 	.attr("y2", 300)
 	.style("stroke", "black")
-	.style("stroke-width", "6px");
+	.style("stroke-width", "1px");
 	
 	arcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(-Math.PI/2)
 	.outerRadius(function(d){
@@ -86,13 +87,45 @@ function renderCharts(mmgData){
 		return "translate(" + (700-arcXScale(d.reldate)) + ",300)";
 	})
 	.append("path")
-	.attr("d", function(d){
+	.transition()
+	.duration(1000)
+	.attrTween("d", function(d,i,a){
+		return function (t){
+			tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
+			//tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(-Math.PI/2)
+			.outerRadius(function(d){
+				if (verbose){
+					console.log(d.reldate);
+					console.log(arcXScale(d.reldate));
+				}
+				return arcXScale(+d.reldate);
+			})
+			.innerRadius(function(d){
+				if (verbose){
+					console.log(d.reldate);
+					console.log(arcXScale(d.reldate));
+				}
+				return arcXScale(+d.reldate) ;
+			});
+			thisArc = tempArcGen(d);
+			if (verbose){
+				if (i == 5){
+					console.log(d);
+					console.log(t);
+					console.log(thisArc);
+				}
+			}
+			return thisArc;
+		}
+	})
+	
+	/* .attr("d", function(d){
 		thisArc = arcGen(d);
 		if (verbose){
 			console.log(thisArc);
 		}
 		return thisArc;
-	})
+	}) */
 	.style("stroke", "red")
 	.style("stroke-width", ".5");
 	
