@@ -40,10 +40,22 @@ function renderCharts(mmgData){
 	.attr("width", mainWidth/2)
 	.attr("height", 600);
 	
-	//set up the piechart data
-	var cited = []
+	mediaSpot = d3.select("div#overallBox")
+	.insert("audio", "div#secondRowBox")
+	.attr("id", "mediaSpot")
+	.attr("controls", "")
+	.attr("src", "data/mmg2.mp3");
+	console.log(mediaSpot);
+	console.log(mediaSpot.node());
+	//mediaSpot.node().play();
+	var myAudio = document.getElementsByTagName("audio")[0]
+	myAudio.play();
 	
-	pieGroup = d3.select("svg#piebox")
+	
+	//set up the piechart data
+	var cited = [];
+	
+	pieGroup = d3.select("svg#pieBox")
 	.append("g")
 	.attr("id", "pieG")
 	.attr("transform", "translate(200,300)");
@@ -145,7 +157,8 @@ function renderCharts(mmgData){
 	.append("path")
 	.transition(function(d, i){return "transition" + i})
 	.duration(1000)
-	.delay(function(d, i){return i * 100})
+	//.delay(function(d, i){return i * 100})
+	.delay(function(d, i){return ((d.seconds-1)*1000)})
 	.each("end", makeEntries)
 	.attrTween("d", function(d,i,a){
 		return function (t){
@@ -183,6 +196,7 @@ function renderCharts(mmgData){
 	
 	
 	function makeEntries(d,i){
+		console.log("making entries");
 		placeTick(d,i);
 		//the ? syntax is more concise but I prefer the clarify of if statements
 		//pieData[d.field] ? pieData[d.field] = pieData[d.field] + 1 : pieData[d.field] = 1;
@@ -209,10 +223,12 @@ function renderCharts(mmgData){
 		.style("stroke-width", "1px")
 		.on("mouseover", pieSliceMouseover)
 		.on("mouseout", pieSliceMouseout);
+		
+		d3.select("g#tooltip").remove();
 
 	}
 	function placeTick(d, i){
-		if (verbose){
+		if (true){
 			console.log("calling placetick");
 			console.log("placeTick function using " +d.reldate);
 			console.log(i);
