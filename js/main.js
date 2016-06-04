@@ -5,7 +5,9 @@ function createViz(){
 function renderCharts(mmgData){
 	
 	var verbose = false;
-	console.log(mmgData);
+	if (verbose){
+		console.log(mmgData);
+	}
 	//build svg areas
 	//flexbox is still awesome and lets me pretend it's good old Java
 	
@@ -37,6 +39,22 @@ function renderCharts(mmgData){
 	.attr("id", "discBox")
 	.attr("width", mainWidth/2)
 	.attr("height", 600);
+	
+	//set up the piechart data
+	var cited = []
+	
+	pieGroup = d3.select("svg#piebox")
+	.append("g")
+	.attr("id", "pieG")
+	.attr("transform", "translate(200,300)");
+	
+	pieLayout = d3.layout.pie().value(function(d){return d.values.length});
+	
+	pieArc = d3.svg.arc().outerRadius(200);
+	
+	pieColorScale = d3.scale.category10(["History", "Military", "Math", "Logic", "Lit", "Art"]);
+	
+	
 	
 	//build up the arcChart
 	
@@ -128,7 +146,7 @@ function renderCharts(mmgData){
 	.transition(function(d, i){return "transition" + i})
 	.duration(1000)
 	.delay(function(d, i){return i * 100})
-	.each("end", placeTick)
+	.each("end", makeEntries)
 	.attrTween("d", function(d,i,a){
 		return function (t){
 			tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
@@ -161,6 +179,34 @@ function renderCharts(mmgData){
 	.style("stroke", "red")
 	.style("stroke-width", ".5");
 	
+	
+	
+	
+	function makeEntries(d,i){
+		placeTick(d,i);
+		//the ? syntax is more concise but I prefer the clarify of if statements
+		//pieData[d.field] ? pieData[d.field] = pieData[d.field] + 1 : pieData[d.field] = 1;
+		cited.push(d);
+		nestedByField = d3.nest()
+		.key(function(el){return el.field})
+		.entries(cited);
+		if (verbose){
+			console.log(nestedByField);
+		}
+		
+		pieG = d3.select("g#pieG");
+		pieG.selectAll("path")
+		.data(pieLayout(nestedByField))
+		.enter()
+		.append("path")
+		.attr("d", pieArc)
+		.style("fill", function(d){return pieColorScale(d.field)})
+		.style("stroke", "black")
+		.style("stroke-width", "1px")
+		.on("mouseover", pieSliceMouseover)
+		.on("mouseout", pieSliceMouseout);
+
+	}
 	function placeTick(d, i){
 		if (verbose){
 			console.log("calling placetick");
@@ -172,7 +218,9 @@ function renderCharts(mmgData){
 		.append("g")
 		.attr("class", "dateG")
 		.attr("transform", function(m){
-			console.log("transform function using " + d.reldate);
+			if (verbose){
+				console.log("transform function using " + d.reldate);
+			}
 			//for some reason using the halved scale places more accurate ticks
 			//I'll have to make another scale to generate the axis, but I'm
 			//concerned I'll run into the same problem.
@@ -207,7 +255,19 @@ function renderCharts(mmgData){
 		
 	}
 	
+	function pieSliceMouseover(d, i){
+		console.log(d);
+		d3.select("svg#pieBox")
+		.append("g")
+		.attr("id", "tooltip")
+		.attr("transform", "translate(0,20)")
+		.append("text")
+		.text(function(){return d.data.key});
+	}
 	
+	function pieSliceMouseout(d, i){
+		d3.select("svg#pieBox").select("g#tooltip").remove();
+	}
 	
 	
 }
