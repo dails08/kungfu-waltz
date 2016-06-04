@@ -48,7 +48,7 @@ function renderCharts(mmgData){
 	.attr("id", "pieG")
 	.attr("transform", "translate(200,300)");
 	
-	pieLayout = d3.layout.pie().value(function(d){return d.values.length});
+	pieLayout = d3.layout.pie().value(function(d){return d.values.length}).sort(null);
 	
 	pieArc = d3.svg.arc().outerRadius(200);
 	
@@ -190,17 +190,21 @@ function renderCharts(mmgData){
 		nestedByField = d3.nest()
 		.key(function(el){return el.field})
 		.entries(cited);
-		if (verbose){
+		if (false){
 			console.log(nestedByField);
 		}
 		
 		pieG = d3.select("g#pieG");
+		//this works but there must be a better way.
+		//not only is this hacky an inefficient, but I can't
+		//tween it at all, so it's jerky.
+		pieG.selectAll("path").remove();
 		pieG.selectAll("path")
 		.data(pieLayout(nestedByField))
 		.enter()
 		.append("path")
 		.attr("d", pieArc)
-		.style("fill", function(d){return pieColorScale(d.field)})
+		.style("fill", function(d){return pieColorScale(d.data.key)})
 		.style("stroke", "black")
 		.style("stroke-width", "1px")
 		.on("mouseover", pieSliceMouseover)
