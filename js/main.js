@@ -47,6 +47,8 @@ function renderCharts(mmgData){
 	
 	//the arcs must be drawn with the center on the line halfway between 1879 and the reldate
 	arcXScale = d3.scale.linear().domain([1, 3879]).range([2, lineLength/2]);
+	
+	tickXScale = d3.scale.linear().domain([1, 3879]).range([2, lineLength]);
 
 	
 	arcChart
@@ -59,6 +61,39 @@ function renderCharts(mmgData){
 	.attr("x2", -lineLength)
 	.attr("y2", 0)
 	.style("stroke", "black")
+	.style("stroke-width", "1px");
+	
+	d3.select("g#baseline")
+	.append("line")
+	.attr("id", "year0")
+	//I hate how hacky it is to keep doubling the halved scale, but it
+	//still performs better.  Argh.
+	.attr("x1", 2*arcXScale(-1879))
+	.attr("y1", 0)
+	.attr("x2", 2*arcXScale(-1879))
+	.attr("y2", 20)
+	.style("stroke", "blue")
+	.style("stroke-width", "1px");
+	
+	d3.select("g#baseline")
+	.append("text")
+	.attr("transform", "translate(" + (2*arcXScale(-1879) + 5)+", 60)rotate(-90)")
+	.text("0 AD");
+
+	d3.select("g#baseline")
+	.append("text")
+	.attr("transform", "translate(" + (2*arcXScale(0))+", 85)rotate(-90)")
+	.text("1879 AD");
+
+	
+	d3.select("g#baseline")
+	.append("line")
+	.attr("id", "year1879")
+	.attr("x1", -arcXScale(0))
+	.attr("y1", 0)
+	.attr("x2", -arcXScale(0))
+	.attr("y2", 20)
+	.style("stroke", "blue")
 	.style("stroke-width", "1px");
 	
 	arcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(-Math.PI/2)
@@ -93,9 +128,7 @@ function renderCharts(mmgData){
 	.transition(function(d, i){return "transition" + i})
 	.duration(1000)
 	.delay(function(d, i){return i * 100})
-	.each("end", function(d,i){
-		return placeTick(d,i);
-	})
+	.each("end", placeTick)
 	.attrTween("d", function(d,i,a){
 		return function (t){
 			tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
@@ -129,17 +162,24 @@ function renderCharts(mmgData){
 	.style("stroke-width", ".5");
 	
 	function placeTick(d, i){
-		console.log("calling placetick");
-		console.log("placeTick function using " +d.reldate);
-		console.log(i);
+		if (verbose){
+			console.log("calling placetick");
+			console.log("placeTick function using " +d.reldate);
+			console.log(i);
+		}
 		
-		d3.select("g#baseline")
+		dateGroup = d3.select("g#baseline")
 		.append("g")
 		.attr("class", "dateG")
 		.attr("transform", function(m){
 			console.log("transform function using " + d.reldate);
+			//for some reason using the halved scale places more accurate ticks
+			//I'll have to make another scale to generate the axis, but I'm
+			//concerned I'll run into the same problem.
 			return "translate(-" + 2*arcXScale(d.reldate) + ", 0)";
-		})
+		});
+		
+		dateGroup
 		.append("line")
 		.attr("x1", 0)
 		.attr("x2", 0)
@@ -147,6 +187,22 @@ function renderCharts(mmgData){
 		.attr("y2", 10)
 		.style("stroke", "black")
 		.style("stroke-width", "1px");
+		
+		dateGroup
+		.append("text")
+		.style("opacity", 0)
+		.attr("text-anchor", "middle")
+		.text(function(){return d.prettydate})
+		.attr("transform", "translate(0,20)")
+		.transition()
+		.duration(1000)
+		.style("opacity", 100)
+		.transition()
+		.duration(500)
+		.style("opacity", 0)
+		.remove();
+		
+		
 		
 		
 	}
