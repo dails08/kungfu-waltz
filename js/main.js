@@ -3,6 +3,8 @@ function createViz(){
 }
 
 function renderCharts(mmgData){
+	
+	var verbose = false;
 	console.log(mmgData);
 	//build svg areas
 	//flexbox is still awesome and lets me pretend it's good old Java
@@ -57,17 +59,23 @@ function renderCharts(mmgData){
 	
 	arcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(-Math.PI/2)
 	.outerRadius(function(d){
-		console.log(d.reldate);
-		console.log(arcXScale(d.reldate));
+		if (verbose){
+			console.log(d.reldate);
+			console.log(arcXScale(d.reldate));
+		}
 		return arcXScale(+d.reldate);
 	})
 	.innerRadius(function(d){
-		console.log(d.reldate);
-		console.log(arcXScale(d.reldate));
+		if (verbose){
+			console.log(d.reldate);
+			console.log(arcXScale(d.reldate));
+		}
 		return arcXScale(+d.reldate) ;
 	});
 	
-	console.log(arcGen);
+	if (verbose){
+		console.log(arcGen);
+	}
 	
 	arcChart.selectAll("g.arc")
 	.data(mmgData)
@@ -80,7 +88,9 @@ function renderCharts(mmgData){
 	.append("path")
 	.attr("d", function(d){
 		thisArc = arcGen(d);
-		console.log(thisArc);
+		if (verbose){
+			console.log(thisArc);
+		}
 		return thisArc;
 	})
 	.style("stroke", "red")
