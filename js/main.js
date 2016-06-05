@@ -53,11 +53,6 @@ function renderCharts(mmgData){
 	.append("ul")
 	.attr("id", "citationList");
 		
-	//for debugging
-	// for (i = 1; i < 10; i++){
-		// citationList.append("li")
-		// .html("This is item " + i);
-	// }
 	
 	secondRowBox
 	.append("div")
@@ -69,13 +64,11 @@ function renderCharts(mmgData){
 
 	
 	
-	mediaSpot = d3.select("div#overallBox")
-	.insert("audio", "div#secondRowBox")
+	mediaSpot = d3.select("div#forMedia")
+	.append("audio")
 	.attr("id", "mediaSpot")
-	//present only for debugging
-	.attr("controls", "")
+	.attr("controls", "true")
 	.attr("src", "data/mmg2.mp3");
-	//mediaSpot.node().play();
 	var myAudio = document.getElementsByTagName("audio")[0];
 	myAudio.addEventListener("play", startTransitions);
 	
@@ -176,7 +169,8 @@ function renderCharts(mmgData){
 		console.log(arcGen);
 	}
 	
-	myAudio.play();
+	//I'd like this to work, but it keeps giving me problems
+	//myAudio.play();
 	function startTransitions(){
 		arcChart.selectAll("g.arc")
 		.data(mmgData)
