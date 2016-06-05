@@ -37,19 +37,49 @@ function renderCharts(mmgData){
 	secondRowBox = overallBox
 	.append("div")
 	.attr("id", "secondRowBox")
+	.style("display", "flex")
 	.style("flex-direction", "row");
 	
+	// secondRowBox
+	// .append("svg")
+	// .attr("id", "discBox")
+	// .attr("width", mainWidth*1.5)
+	// .attr("height", 600);
+	
 	secondRowBox
-	.append("svg")
-	.attr("id", "discBox")
-	.attr("width", mainWidth*1.5)
+	.append("div")
+	.attr("id", "citationBox")
+	//too lazy to reindex the widths right now. #bigsorry
+	.attr("width", mainWidth*1.5/2)
 	.attr("height", 600);
+	// .style("max-height", 600)
+	// .style("overflow-y", "scroll");
+	
+	citationList = d3.select("#citationBox")
+	.append("ul")
+	.attr("id", "citationList");
+		
+	//for debugging
+	// for (i = 1; i < 10; i++){
+		// citationList.append("li")
+		// .html("This is item " + i);
+	// }
+	
+	secondRowBox
+	.append("div")
+	.attr("id", "discBox")
+	.attr("width", mainWidth*1.5/2)
+	.attr("height", 600);
+	// .style("max-height", 600)
+	// .style("overflow-y", "scroll");
+
+	
 	
 	mediaSpot = d3.select("div#overallBox")
 	.insert("audio", "div#secondRowBox")
 	.attr("id", "mediaSpot")
 	//present only for debugging
-	//.attr("controls", "")
+	.attr("controls", "")
 	.attr("src", "data/mmg2.mp3");
 	//mediaSpot.node().play();
 	var myAudio = document.getElementsByTagName("audio")[0]
@@ -235,9 +265,32 @@ function renderCharts(mmgData){
 		
 		d3.select("g#tooltip").remove();
 		
+		d3.select("#citationList")
+		.append("li")
+		.html(d.ref + ": " + d.prettydate)
+		.style("color", function(){ return pieColorScale(d.field)})
+		.attr("href", "")
+		.on("click", function(){
+			setDiscussion(d,i);
+		});
+		
 		
 
 	}
+	
+	function setDiscussion(d, i){
+		console.log(d);
+		d3.select("#discBox").selectAll("p").remove();
+		d3.select("#discBox")
+		.append("p")
+		.html(d.explanation)
+		.style("color", "white");
+		d3.select("#discBox")
+		.append("p")
+		.html(d.citation)
+		.style("color", "white");
+	}
+	
 	function placeTick(d, i){
 		//need to break these out into functions
 		if (false){
