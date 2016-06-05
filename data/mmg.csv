@@ -2,17 +2,18 @@ ref,absdate,prettydate,reldate,field,citation,seconds
 First King of England,871,871 AD,1008,History,https://en.wikipedia.org/wiki/List_of_English_monarchs,20.8
 Battle of Marathon,-490,490 BC,2369,Military,https://en.wikipedia.org/wiki/Battle_of_Marathon,22.8
 Battle of Waterloo,1815,1815 AD,64,Military,https://en.wikipedia.org/wiki/Battle_of_Waterloo,23.5
-Quadratic Equations,-1990,1990 BC,3879,Math,https://en.wikipedia.org/wiki/Quadratic_equation#History,30.5
+Quadratic Equations,-1990,1990 BC,3879,Math,https://en.wikipedia.org/wiki/Quadratic_equation#History,30
 Binomial Theorem,-400,400 BC,2279,Math,https://en.wikipedia.org/wiki/Binomial_theorem#History,31.5
 Hypotenuse,-300,300 BC,2179,Math,https://numberwarrior.wordpress.com/2008/11/11/on-the-word-hypotenuse/,38.7
 Calculus,1687,1687 AD,192,Math,https://en.wikipedia.org/wiki/Calculus#History,50.5
+Binomial Nomenclature,1753,1753 AD,126,Science,https://en.wikipedia.org/wiki/Binomial_nomenclature,51.9
 King Arthur,500,500 AD,1379,History,https://en.wikipedia.org/wiki/King_Arthur#Debated_historicity,65.3
 Sir Caradoc,500,500 AD,1379,Military,https://en.wikipedia.org/wiki/Caradoc,66
 Acrostics,-586,586 BC,2465,Logic,https://en.wikipedia.org/wiki/Acrostic,67.5
 Paradox,-490,490 BC,2369,Logic,https://en.wikipedia.org/wiki/Zeno%27s_paradoxes,68.9
-Elegiacs,-340,340 BC,2219,Lit,https://en.wikipedia.org/wiki/Elegiac#Classical_poets,70
+Elegiacs,-340,340 BC,2219,Literature,https://en.wikipedia.org/wiki/Elegiac#Classical_poets,70
 Heliogabalus,203,203 AD,1676,History,https://en.wikipedia.org/wiki/Elagabalus,71.3
-Conics,-320,320 BC,2199,Math,https://en.wikipedia.org/wiki/Conic_section#History,71.5
+Conics,-320,320 BC,2199,Math,https://en.wikipedia.org/wiki/Conic_section#History,72
 Rapheal,1520,1520 AD,359,Art,https://en.wikipedia.org/wiki/Raphael,75.7
 Gerard Dow,1613,1613 AD,266,Art,https://en.wikipedia.org/wiki/Gerrit_Dou,76
 Zoffany,1733,1733 AD,146,Art,https://en.wikipedia.org/wiki/Johan_Zoffany,76.9
@@ -22,9 +23,10 @@ HMS Pinafore,1878,1878 AD,1,Art,https://en.wikipedia.org/wiki/H.M.S._Pinafore,88
 Babylonic Cuneiform,-2000,2000 BC,3879,History,https://en.wikipedia.org/wiki/Cuneiform_script,99
 Caractacus (Man),50,50 AD,1829,History,https://en.wikipedia.org/wiki/Caratacus,101.2
 Caractacus (Statue),1859,1859 AD,20,Art, https://en.wikipedia.org/wiki/Major-General%27s_Song#ref_4,101.2
-Mamelon,1850,1850 AD,29,Military,https://en.wikipedia.org/wiki/Mamelon_(fort),118
-Ravelin,1850,1850 AD,29,Military,https://en.wikipedia.org/wiki/Ravelin,119
+Mamelon,1850,1850 AD,29,Military,https://en.wikipedia.org/wiki/Mamelon_(fort),117.5
+Ravelin,1850,1850 AD,29,Military,https://en.wikipedia.org/wiki/Ravelin,118.5
 Mauser Rifle,1870,1870 AD,9,Military,https://en.wikipedia.org/wiki/Mauser,121
 Commissariat,1869,1869 AD,10,Military,https://en.wikipedia.org/wiki/Commissariat,128
-Gee,1600,1600 AD,279,Military,http://www.dictionary.com/browse/gee?s=t,144.9
-1800,1800,1800 AD,79,Military,,156.5
+Nunnery,1599,1599 AD,280,Art,https://en.wikipedia.org/wiki/Hamlet,134.4
+Gee,1600,1600 AD,279,Military,http://www.dictionary.com/browse/gee?s=t,146
+Beginning of the Century,1800,1800 AD,79,Military,,158

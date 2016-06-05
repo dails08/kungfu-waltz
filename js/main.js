@@ -21,7 +21,7 @@ function renderCharts(mmgData){
 	.append("svg")
 	.attr("id", "arcChart")
 	.attr("width", mainWidth)
-	.attr("height", 600);
+	.attr("height", 500);
 	
 	secondRowBox = overallBox
 	.append("div")
@@ -46,11 +46,9 @@ function renderCharts(mmgData){
 	//present only for debugging
 	//.attr("controls", "")
 	.attr("src", "data/mmg2.mp3");
-	console.log(mediaSpot);
-	console.log(mediaSpot.node());
 	//mediaSpot.node().play();
 	var myAudio = document.getElementsByTagName("audio")[0]
-	myAudio.play();
+	//myAudio.play();
 	
 	
 	//set up the piechart data
@@ -65,7 +63,7 @@ function renderCharts(mmgData){
 	
 	pieArc = d3.svg.arc().outerRadius(200);
 	
-	pieColorScale = d3.scale.category10(["History", "Military", "Math", "Logic", "Lit", "Art"]);
+	pieColorScale = d3.scale.category10(["History", "Military", "Math", "Logic", "Literature", "Art", "Science"]);
 	
 	
 	
@@ -149,6 +147,7 @@ function renderCharts(mmgData){
 		console.log(arcGen);
 	}
 	
+	myAudio.play();
 	arcChart.selectAll("g.arc")
 	.data(mmgData)
 	.enter()
@@ -264,13 +263,24 @@ function renderCharts(mmgData){
 		.style("stroke", "white")
 		.style("stroke-width", "1px");
 		
+		
+		yOffsets = {"Sir Caradoc": 70, "Battle of Waterloo": 120, "Binomial Nomenclature": 120, "Gerard Dow": 80, "Zoffany": 120, "HMS Pinafore": 120, "Caractacus (Man)": 95, "Caractacus (Statue)":120, "Mamelon":120, "Ravelin":120, "Mauser Rifle":120, "Commissariat":120, "Beginning of the Century":120, "Heliogabalus": 100, "Calculus":120};
+
 		dateGroup
 		.append("text")
 		.style("opacity", 0)
 		.style("fill", "white")
 		.attr("text-anchor", "middle")
 		.text(function(){return d.prettydate})
-		.attr("transform", "translate(0,20)")
+		//.attr("transform", "translate(0,20)")
+		.attr("transform", function(){
+			if (yOffsets[d.ref]){
+				return "translate(0, " + (yOffsets[d.ref] - 20)+")";
+			} else {
+				return "translate(0,20)";
+			}
+		})
+
 		.transition()
 		.duration(1000)
 		.style("opacity", 100)
@@ -278,6 +288,7 @@ function renderCharts(mmgData){
 		.duration(500)
 		.style("opacity", 0)
 		.remove();
+		
 		
 		dateGroup
 		.append("text")
@@ -290,13 +301,11 @@ function renderCharts(mmgData){
 		})
 		.style("font-size", 18)
 		.attr("transform", function(){
-			if (d.ref == "Sir Caradoc"){
-				return "translate(0,70)";
-			}else if (d.ref == "Battle of Waterloo"){
-				return "translate(0,120)";
-			}else{
+			if (yOffsets[d.ref]){
+				return "translate(0, " + yOffsets[d.ref]+")";
+			} else {
 				return "translate(0,40)";
-		}
+			}
 		})
 		.transition()
 		.duration(1000)
@@ -329,13 +338,13 @@ function renderCharts(mmgData){
 		
 		d3.selectAll("g.arc").select("path")
 		.filter(function(m, i){
-			console.log("m:");
-			console.log(m);
-			console.log("m.field:");
-			console.log(m.field);
-			arcField = m.field;
-			pieField = d.data.key;
-			return arcField == pieField;
+			if (false){
+				console.log("m:");
+				console.log(m);
+				console.log("m.field:");
+				console.log(m.field);
+			}
+			return m.field == d.data.key;
 		})
 		.style("stroke", function(){
 			return pieColorScale(d.data.key);
