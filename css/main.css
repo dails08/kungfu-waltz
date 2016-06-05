@@ -24,6 +24,21 @@
  }
  
  div {
-	 border: 1px solid lightgray;
+	 border: 0px solid lightgray;
+ }
+ 
+ div#citationBox {
+	 padding: 10px;
+	 margin: 10px;
+	 min-width: 300px;
+	 max-width: 300px;
+	 max-height: 400px;
+ }
+ 
+ div#discBox {
+	 padding: 10px;
+	 margin: 10px;
+	 max-width: 500px;
+
  }
  

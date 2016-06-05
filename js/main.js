@@ -39,21 +39,15 @@ function renderCharts(mmgData){
 	.attr("id", "secondRowBox")
 	.style("display", "flex")
 	.style("flex-direction", "row");
-	
-	// secondRowBox
-	// .append("svg")
-	// .attr("id", "discBox")
-	// .attr("width", mainWidth*1.5)
-	// .attr("height", 600);
-	
+		
 	secondRowBox
 	.append("div")
 	.attr("id", "citationBox")
 	//too lazy to reindex the widths right now. #bigsorry
-	.attr("width", mainWidth*1.5/2)
-	.attr("height", 600);
-	// .style("max-height", 600)
-	// .style("overflow-y", "scroll");
+	.attr("width", 300)
+	.attr("height", 600)
+	.style("max-height", 600)
+	.style("overflow-y", "auto");
 	
 	citationList = d3.select("#citationBox")
 	.append("ul")
@@ -68,10 +62,10 @@ function renderCharts(mmgData){
 	secondRowBox
 	.append("div")
 	.attr("id", "discBox")
-	.attr("width", mainWidth*1.5/2)
-	.attr("height", 600);
-	// .style("max-height", 600)
-	// .style("overflow-y", "scroll");
+	.attr("width", 200)
+	.attr("height", 600)
+	.style("max-height", 600)
+	.style("overflow-y", "auto");
 
 	
 	
@@ -79,7 +73,7 @@ function renderCharts(mmgData){
 	.insert("audio", "div#secondRowBox")
 	.attr("id", "mediaSpot")
 	//present only for debugging
-	.attr("controls", "")
+	//.attr("controls", "")
 	.attr("src", "data/mmg2.mp3");
 	//mediaSpot.node().play();
 	var myAudio = document.getElementsByTagName("audio")[0]
@@ -272,23 +266,91 @@ function renderCharts(mmgData){
 		.attr("href", "")
 		.on("click", function(){
 			setDiscussion(d,i);
+		})
+		.on("mouseover", function(){
+			highlight(d,i);
+		})
+		.on("mouseout", function(){
+			unhighlight();
 		});
 		
+		updateScroll();
 		
+	}
+	
+	function updateScroll(){
+		var element = document.getElementById("citationBox");
+		element.scrollTop = element.scrollHeight;
+}
+	
+	function unhighlight(){
+		d3.selectAll("g.arc > path")
+		.style("stroke", "red")
+		.style("stroke-width", "1px");
+
+	};
+	
+	function highlight(d,i){
+		//reset previous selection
+		d3.selectAll("g.arc > path")
+		.style("stroke", "red")
+		.style("stroke-width", "1px");
+
+		//doesn't work yet
+		
+		d3.selectAll("g.arc").select("path")
+		.filter(function(m, i){
+			if (true){
+				console.log("m:");
+				console.log(m);
+				console.log("m.field:");
+				console.log(m.field);
+			}
+			return m.ref == d.ref;
+		})
+		.style("stroke", function(){
+			return pieColorScale(d.field);
+		})
+		.style("stroke-width", "3px")
+		.each(function(){
+			if (false){
+				console.log(this);
+				console.log(this.parentElement);
+				console.log(this.parentElement.parentElement);
+			}
+			this.parentElement.parentElement.appendChild(this.parentElement);
+		});
 
 	}
 	
 	function setDiscussion(d, i){
-		console.log(d);
+		if (false){
+			console.log(d);
+		}
 		d3.select("#discBox").selectAll("p").remove();
+		
+		d3.select("#discBox")
+		.append("p")
+		.html(d.field)
+		.style("font-size", "2em")
+		.style("color", pieColorScale(d.field));
+		
+		d3.select("#discBox")
+		.append("p")
+		.html(d.ref)
+		.style("font-size", "1.5em");
+		
 		d3.select("#discBox")
 		.append("p")
 		.html(d.explanation)
 		.style("color", "white");
 		d3.select("#discBox")
 		.append("p")
+		.append("a")
+		.attr("href", d.citation)
 		.html(d.citation)
 		.style("color", "white");
+		
 	}
 	
 	function placeTick(d, i){
