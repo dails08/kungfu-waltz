@@ -337,12 +337,12 @@ function renderCharts(mmgData){
 		
 		d3.select("#discBox")
 		.append("p")
-		.html('"' + d.lyric + '"')
-		
-		d3.select("#discBox")
-		.append("p")
 		.html(d.ref)
 		.style("font-size", "1.5em");
+
+		d3.select("#discBox")
+		.append("p")
+		.html('"' + d.lyric + '"')		
 		
 		d3.select("#discBox")
 		.append("p")
