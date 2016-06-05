@@ -73,11 +73,11 @@ function renderCharts(mmgData){
 	.insert("audio", "div#secondRowBox")
 	.attr("id", "mediaSpot")
 	//present only for debugging
-	//.attr("controls", "")
+	.attr("controls", "")
 	.attr("src", "data/mmg2.mp3");
 	//mediaSpot.node().play();
-	var myAudio = document.getElementsByTagName("audio")[0]
-	//myAudio.play();
+	var myAudio = document.getElementsByTagName("audio")[0];
+	myAudio.addEventListener("play", startTransitions);
 	
 	
 	//set up the piechart data
@@ -177,52 +177,53 @@ function renderCharts(mmgData){
 	}
 	
 	myAudio.play();
-	arcChart.selectAll("g.arc")
-	.data(mmgData)
-	.enter()
-	.append("g")
-	.attr("class", "arc")
-	.attr("transform", function(d){
-		return "translate(" + (700-arcXScale(d.reldate)) + ",310)";
-	})
-	.append("path")
-	.transition(function(d, i){return "transition" + i})
-	.duration(1000)
-	//.delay(function(d, i){return i * 100})
-	.delay(function(d, i){return ((d.seconds-1)*1000)})
-	.each("end", makeEntries)
-	.attrTween("d", function(d,i,a){
-		return function (t){
-			tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
-			.outerRadius(function(d){
+	function startTransitions(){
+		arcChart.selectAll("g.arc")
+		.data(mmgData)
+		.enter()
+		.append("g")
+		.attr("class", "arc")
+		.attr("transform", function(d){
+			return "translate(" + (700-arcXScale(d.reldate)) + ",310)";
+		})
+		.append("path")
+		.transition(function(d, i){return "transition" + i})
+		.duration(1000)
+		//.delay(function(d, i){return i * 100})
+		.delay(function(d, i){return ((d.seconds-1)*1000)})
+		.each("end", makeEntries)
+		.attrTween("d", function(d,i,a){
+			return function (t){
+				tempArcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(Math.PI/2 - t*(Math.PI))
+				.outerRadius(function(d){
+					if (verbose){
+						console.log(d.reldate);
+						console.log(arcXScale(d.reldate));
+					}
+					return arcXScale(+d.reldate);
+				})
+				.innerRadius(function(d){
+					if (verbose){
+						console.log(d.reldate);
+						console.log(arcXScale(d.reldate));
+					}
+					return arcXScale(+d.reldate) ;
+				});
+				thisArc = tempArcGen(d);
 				if (verbose){
-					console.log(d.reldate);
-					console.log(arcXScale(d.reldate));
+					if (i == 5){
+						console.log(d);
+						console.log(t);
+						console.log(thisArc);
+					}
 				}
-				return arcXScale(+d.reldate);
-			})
-			.innerRadius(function(d){
-				if (verbose){
-					console.log(d.reldate);
-					console.log(arcXScale(d.reldate));
-				}
-				return arcXScale(+d.reldate) ;
-			});
-			thisArc = tempArcGen(d);
-			if (verbose){
-				if (i == 5){
-					console.log(d);
-					console.log(t);
-					console.log(thisArc);
-				}
+				return thisArc;
 			}
-			return thisArc;
-		}
-	})
-	.style("fill", "none")
-	.style("stroke", "red")
-	.style("stroke-width", ".5");
-	
+		})
+		.style("fill", "none")
+		.style("stroke", "red")
+		.style("stroke-width", ".5");
+	}
 	
 	
 	
