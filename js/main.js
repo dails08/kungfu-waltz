@@ -57,7 +57,7 @@ function renderCharts(mmgData){
 	pieGroup = d3.select("svg#pieBox")
 	.append("g")
 	.attr("id", "pieG")
-	.attr("transform", "translate(200,300)");
+	.attr("transform", "translate(200,200)");
 	
 	pieLayout = d3.layout.pie().value(function(d){return d.values.length}).sort(null);
 	
@@ -329,7 +329,7 @@ function renderCharts(mmgData){
 		d3.select("svg#pieBox")
 		.append("g")
 		.attr("id", "tooltip")
-		.attr("transform", "translate(200,20)")
+		.attr("transform", "translate(200,500)")
 		.append("text")
 		.attr("text-anchor", "middle")
 		.style("font-size", "2em")
