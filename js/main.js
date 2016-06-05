@@ -43,7 +43,8 @@ function renderCharts(mmgData){
 	mediaSpot = d3.select("div#overallBox")
 	.insert("audio", "div#secondRowBox")
 	.attr("id", "mediaSpot")
-	.attr("controls", "")
+	//present only for debugging
+	//.attr("controls", "")
 	.attr("src", "data/mmg2.mp3");
 	console.log(mediaSpot);
 	console.log(mediaSpot.node());
@@ -90,8 +91,8 @@ function renderCharts(mmgData){
 	.attr("y1", 0)
 	.attr("x2", -lineLength)
 	.attr("y2", 0)
-	.style("stroke", "black")
-	.style("stroke-width", "1px");
+	.style("stroke", "white")
+	.style("stroke-width", "2px");
 	
 	d3.select("g#baseline")
 	.append("line")
@@ -102,18 +103,20 @@ function renderCharts(mmgData){
 	.attr("y1", 0)
 	.attr("x2", 2*arcXScale(-1879))
 	.attr("y2", 20)
-	.style("stroke", "blue")
-	.style("stroke-width", "1px");
+	.style("stroke", "green")
+	.style("stroke-width", "2px");
 	
 	d3.select("g#baseline")
 	.append("text")
 	.attr("transform", "translate(" + (2*arcXScale(-1879) + 5)+", 60)rotate(-90)")
-	.text("0 AD");
+	.text("0 AD")
+	.style("fill", "white");
 
 	d3.select("g#baseline")
 	.append("text")
 	.attr("transform", "translate(" + (2*arcXScale(0))+", 85)rotate(-90)")
-	.text("1879 AD");
+	.text("1879 AD")
+	.style("fill", "white");
 
 	
 	d3.select("g#baseline")
@@ -123,8 +126,8 @@ function renderCharts(mmgData){
 	.attr("y1", 0)
 	.attr("x2", -arcXScale(0))
 	.attr("y2", 20)
-	.style("stroke", "blue")
-	.style("stroke-width", "1px");
+	.style("stroke", "green")
+	.style("stroke-width", "2px");
 	
 	arcGen = d3.svg.arc().startAngle(Math.PI/2).endAngle(-Math.PI/2)
 	.outerRadius(function(d){
@@ -196,7 +199,9 @@ function renderCharts(mmgData){
 	
 	
 	function makeEntries(d,i){
-		console.log("making entries");
+		if (false){
+			console.log("making entries");
+		}
 		placeTick(d,i);
 		//the ? syntax is more concise but I prefer the clarify of if statements
 		//pieData[d.field] ? pieData[d.field] = pieData[d.field] + 1 : pieData[d.field] = 1;
@@ -225,10 +230,13 @@ function renderCharts(mmgData){
 		.on("mouseout", pieSliceMouseout);
 		
 		d3.select("g#tooltip").remove();
+		
+		
 
 	}
 	function placeTick(d, i){
-		if (true){
+		//need to break these out into functions
+		if (false){
 			console.log("calling placetick");
 			console.log("placeTick function using " +d.reldate);
 			console.log(i);
@@ -253,12 +261,13 @@ function renderCharts(mmgData){
 		.attr("x2", 0)
 		.attr("y1", 0)
 		.attr("y2", 10)
-		.style("stroke", "black")
+		.style("stroke", "white")
 		.style("stroke-width", "1px");
 		
 		dateGroup
 		.append("text")
 		.style("opacity", 0)
+		.style("fill", "white")
 		.attr("text-anchor", "middle")
 		.text(function(){return d.prettydate})
 		.attr("transform", "translate(0,20)")
@@ -270,23 +279,75 @@ function renderCharts(mmgData){
 		.style("opacity", 0)
 		.remove();
 		
+		dateGroup
+		.append("text")
+		.style("opacity", 0)
+		.style("fill", "white")
+		.attr("text-anchor", "middle")
+		.text(function(){return d.ref})
+		.style("fill", function(){
+			return pieColorScale(d.field);
+		})
+		.style("font-size", 18)
+		.attr("transform", function(){
+			if (d.ref == "Sir Caradoc"){
+				return "translate(0,70)";
+			}else if (d.ref == "Battle of Waterloo"){
+				return "translate(0,120)";
+			}else{
+				return "translate(0,40)";
+		}
+		})
+		.transition()
+		.duration(1000)
+		.style("opacity", 100)
+		.transition()
+		.duration(500)
+		.style("opacity", 0)
+		.remove();
+		
+		
+		
 		
 		
 		
 	}
 	
 	function pieSliceMouseover(d, i){
-		console.log(d);
+		if (false){
+			console.log(d);
+		}
 		d3.select("svg#pieBox")
 		.append("g")
 		.attr("id", "tooltip")
-		.attr("transform", "translate(0,20)")
+		.attr("transform", "translate(200,20)")
 		.append("text")
-		.text(function(){return d.data.key});
+		.attr("text-anchor", "middle")
+		.style("font-size", "2em")
+		.text(function(){return d.data.key})
+		.style("fill", "white");
+		
+		d3.selectAll("g.arc").select("path")
+		.filter(function(m, i){
+			console.log("m:");
+			console.log(m);
+			console.log("m.field:");
+			console.log(m.field);
+			arcField = m.field;
+			pieField = d.data.key;
+			return arcField == pieField;
+		})
+		.style("stroke", function(){
+			return pieColorScale(d.data.key);
+		})
+		.style("stroke-width", "3px");
 	}
 	
 	function pieSliceMouseout(d, i){
 		d3.select("svg#pieBox").select("g#tooltip").remove();
+		d3.selectAll("g.arc > path")
+		.style("stroke", "red")
+		.style("stroke-width", "1px");
 	}
 	
 	

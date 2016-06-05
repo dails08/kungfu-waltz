@@ -1,3 +1,18 @@
  svg {
-	 border: 1px solid lightgray;
+	 border: 0px solid lightgray;
+ }
+ 
+ body{
+	 background-color: #3d3d5c;
+ }
+ 
+ h1 {
+	 color: white;
+	 text-align: center;
+ }
+ 
+ h2 {
+	 color: white;
+	 text-align: center;
+	 
  }

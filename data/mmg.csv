@@ -1,11 +1,11 @@
 ref,absdate,prettydate,reldate,field,citation,seconds
-Kings of England,871,871 AD,1008,History,https://en.wikipedia.org/wiki/List_of_English_monarchs,20.8
-Marathon,-490,490 BC,2369,Military,https://en.wikipedia.org/wiki/Battle_of_Marathon,22.8
-Waterloo,1815,1815 AD,64,Military,https://en.wikipedia.org/wiki/Battle_of_Waterloo,23.5
-Quadratic equations,-1990,1990 BC,3879,Math,https://en.wikipedia.org/wiki/Quadratic_equation#History,30
-Binomial Theorem,-400,400 BC,2279,Math,https://en.wikipedia.org/wiki/Binomial_theorem#History,30.85
+First King of England,871,871 AD,1008,History,https://en.wikipedia.org/wiki/List_of_English_monarchs,20.8
+Battle of Marathon,-490,490 BC,2369,Military,https://en.wikipedia.org/wiki/Battle_of_Marathon,22.8
+Battle of Waterloo,1815,1815 AD,64,Military,https://en.wikipedia.org/wiki/Battle_of_Waterloo,23.5
+Quadratic Equations,-1990,1990 BC,3879,Math,https://en.wikipedia.org/wiki/Quadratic_equation#History,30.5
+Binomial Theorem,-400,400 BC,2279,Math,https://en.wikipedia.org/wiki/Binomial_theorem#History,31.5
 Hypotenuse,-300,300 BC,2179,Math,https://numberwarrior.wordpress.com/2008/11/11/on-the-word-hypotenuse/,38.7
-Calculus,1687,1687 AD,192,Math,https://en.wikipedia.org/wiki/Calculus#History,50
+Calculus,1687,1687 AD,192,Math,https://en.wikipedia.org/wiki/Calculus#History,50.5
 King Arthur,500,500 AD,1379,History,https://en.wikipedia.org/wiki/King_Arthur#Debated_historicity,65.3
 Sir Caradoc,500,500 AD,1379,Military,https://en.wikipedia.org/wiki/Caradoc,66
 Acrostics,-586,586 BC,2465,Logic,https://en.wikipedia.org/wiki/Acrostic,67.5
@@ -18,13 +18,13 @@ Gerard Dow,1613,1613 AD,266,Art,https://en.wikipedia.org/wiki/Gerrit_Dou,76
 Zoffany,1733,1733 AD,146,Art,https://en.wikipedia.org/wiki/Johan_Zoffany,76.9
 The Frogs,-405,405 BC,2284,Art,https://en.wikipedia.org/wiki/The_Frogs,78
 Fugue,1550,1550 AD,329,Art,https://en.wikipedia.org/wiki/Fugue#History,80.1
-Pinafore,1878,1878 AD,1,Art,https://en.wikipedia.org/wiki/H.M.S._Pinafore,88
-Babylonic cuneiform,-2000,2000 BC,3879,History,https://en.wikipedia.org/wiki/Cuneiform_script,99
-Caractacus,50,50 AD,1829,History,https://en.wikipedia.org/wiki/Caratacus,101.2
-Caractacus,1859,1859 AD,20,Art, https://en.wikipedia.org/wiki/Major-General%27s_Song#ref_4,101.2
+HMS Pinafore,1878,1878 AD,1,Art,https://en.wikipedia.org/wiki/H.M.S._Pinafore,88
+Babylonic Cuneiform,-2000,2000 BC,3879,History,https://en.wikipedia.org/wiki/Cuneiform_script,99
+Caractacus (Man),50,50 AD,1829,History,https://en.wikipedia.org/wiki/Caratacus,101.2
+Caractacus (Statue),1859,1859 AD,20,Art, https://en.wikipedia.org/wiki/Major-General%27s_Song#ref_4,101.2
 Mamelon,1850,1850 AD,29,Military,https://en.wikipedia.org/wiki/Mamelon_(fort),118
 Ravelin,1850,1850 AD,29,Military,https://en.wikipedia.org/wiki/Ravelin,119
 Mauser Rifle,1870,1870 AD,9,Military,https://en.wikipedia.org/wiki/Mauser,121
 Commissariat,1869,1869 AD,10,Military,https://en.wikipedia.org/wiki/Commissariat,128
 Gee,1600,1600 AD,279,Military,http://www.dictionary.com/browse/gee?s=t,144.9
-The beginning of the century,1800,1800 AD,79,Military,,156.5
+1800,1800,1800 AD,79,Military,,156.5
